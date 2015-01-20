@@ -1,4 +1,6 @@
-# fidor-sync (ALPHA)
+# fidor-sync
+ALPHA SOFTWARE
+
 Sends, monitors, tracks, and quotes payments on the Fidor network.
 
 ## Installation
