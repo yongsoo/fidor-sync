@@ -1,8 +1,8 @@
 {
-  "name": "MyBridgesApp",
-  "version": "0.1.1",
-  "description": "Auto-generated Bridges Node.js application",
-  "main": "index.js",
+  "name": "fidor-sync",
+  "version": "0.1.0",
+  "description": "Sends, monitors, tracks, and quotes payments on the Fidor network",
+  "main": "build/index.js",
   "scripts": {
     "test": "npm run build && mocha -R spec test/",
     "start": "npm run build && node build/bridges",
