@@ -17,7 +17,7 @@ module.exports = function(models, lib) {
       .error(next)
     },
     show: function(req, res, next) {
-      new models.Payment({ external_uid: req.params.external_uid })
+      new models.Payment({ id: req.params.id })
         .fetch()
         .then(function(payment) {
           if (payment) {
