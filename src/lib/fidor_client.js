@@ -52,6 +52,10 @@ FidorClient.prototype = {
           }
         });
     };
+  },
+
+  deletePayment: function(id) {
+    throw new Error('Unimplemented; TODO: Check if API allows deleting payment');
   }
 }
 
