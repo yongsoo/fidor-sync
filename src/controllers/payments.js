@@ -30,9 +30,9 @@ module.exports = function(models, lib) {
           }
         })
         .error(next)
+    },
+    cancel: function(req, res, next) {
+      next(new Error('Unimplemented'))
     }
-    // cancel: function(req, res, next) {
-    //   next(new Error('Unimplemented'))
-    // }
   }
 }

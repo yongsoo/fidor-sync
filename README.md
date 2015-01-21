@@ -44,10 +44,9 @@ The following environment variables must be set to run Fidor Sync:
 - DATABASE_USER
 - DATABASE_PASSWORD
 - DATABASE_PORT
-- FIDOR_API_URL
-- FIDOR_OAUTH_URL
-- FIDOR_CLIENT_ID
-- FIDOR_CLIENT_SECRET
+- FIDOR_URL
+- FIDOR_ACCESS_TOKEN
+- FIDOR_ACCOUNT_ID
 
 ## Processes
 Fidor-sync has several types of processes.

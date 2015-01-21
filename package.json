@@ -4,7 +4,7 @@
   "description": "Sends, monitors, tracks, and quotes payments on the Fidor network",
   "main": "build/index.js",
   "scripts": {
-    "test": "npm run build && mocha -R spec test/",
+    "test": "npm run build && mocha -R spec build/test/**/*.js",
     "start": "npm run build && node build/bridges",
     "build": "gulp"
   },
@@ -31,6 +31,7 @@
     "promise": "^6.0.1",
     "sqlite3": "^3.0.4",
     "superagent": "^0.21.0",
+    "uuid": "^2.0.1",
     "winston": "^0.8.3"
   },
   "devDependencies": {
