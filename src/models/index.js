@@ -1,5 +1,5 @@
-var knex      = require(__dirname+'/../config/database');
-var bookshelf = require('bookshelf')(knex);
+var knex      = require(__dirname+'/../config/database')
+var bookshelf = require('bookshelf')(knex)
 
 module.exports = {
   Notification: require(__dirname+'/notification')(bookshelf),

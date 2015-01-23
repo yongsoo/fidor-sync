@@ -1,6 +1,6 @@
-var Promise = require('bluebird');
-var http = require('superagent');
-var uuid = require('uuid');
+var Promise = require('bluebird')
+var http = require('superagent')
+var uuid = require('uuid')
 
 function FidorClient(fidorOptions) {
   this.url = fidorOptions.url;

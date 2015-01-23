@@ -1,4 +1,4 @@
-var FidorClient = require(__dirname+'/../lib/fidor_client');
+var FidorClient = require(__dirname+'/../lib/fidor_client')
 
 module.exports = function(models) {
 
@@ -11,6 +11,26 @@ module.exports = function(models) {
         clientId: process.env['FIDOR_CLIENT_ID'],
         clientSecret: process.env['FIDOR_CLIENT_SECRET']
       });
+
+      if (Number(req.body.amount) < 0.01 || typeof req.body.amount !== 'number') {
+        res.status(400).send({
+          success: false,
+          error: 'Amount must be a number and greater than 0.01'
+        })
+        return;
+      } else if (req.body.recipient && req.body.recipient.length > 70) {
+        res.status(400).send({
+          success: false,
+          error: 'Recipient can not be greater than 70 characters long'
+        })
+        return;
+      } else if (req.body.message && req.body.message.length > 140) {
+        res.status(400).send({
+          success: false,
+          error: 'Message can not be greater than 140 characters long'
+        })
+        return;
+      }
 
       fidorClient.sendPayment({
         amount: req.body.amount,
