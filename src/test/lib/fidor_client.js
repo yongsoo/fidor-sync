@@ -9,7 +9,7 @@ describe('Fidor Client', function() {
     fidorClient = new FidorClient({
       url: process.env['FIDOR_URL'],
       accessToken: process.env['FIDOR_ACCESS_TOKEN'],
-      accountId: process.env['FIDOR_ACCOUNT_ID'],
+      accountId: process.env['FIDOR_ACCOUNT_ID']
     })
   });
 
