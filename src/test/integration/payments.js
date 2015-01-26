@@ -3,7 +3,7 @@ var assert = require('assert')
 var http = require('supertest')(app)
 var uuid = require('uuid')
 
-describe('Fidor Sync API end points', function() {
+describe('Fidor Sync API end point: POST /payments', function() {
 
   it('should create a payment when required params are passed', function(done) {
     var uid = uuid.v4();
@@ -128,4 +128,37 @@ describe('Fidor Sync API end points', function() {
       done();
     })
   });
+});
+
+describe('Fidor Sync API end point: GET /payments/:id', function() {
+
+  it('should get a payment when passed in a valid id', function(done) {
+    http.get('/payments/5777')
+    .end(function(error, response) {
+      if(error) {
+        console.log('Error: ', error);
+        assert(!error);
+        done();
+      }
+      assert.strictEqual(response.status, 200);
+      assert.strictEqual(response.body.success, true);
+      assert.strictEqual(response.body.payment.id, '5777');
+      done();
+    })
+  });
+
+  it('should not get a payment when passed in an invalid id', function(done) {
+    http.get('/payments/243562346234623463673673673467346')
+    .end(function(error, response) {
+      if(error) {
+        console.log('Error: ', error);
+        assert(!error);
+        done();
+      }
+      assert.strictEqual(response.body.success, false);
+      assert.strictEqual(response.status, 404);
+      done();
+    })
+  });  
+
 });

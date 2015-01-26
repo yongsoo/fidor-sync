@@ -47,6 +47,7 @@ FidorClient.prototype = {
     return new Promise(function(resolve, reject) {
       return http
         .get(_this.url + '/sepa_credit_transfers/' + id)
+        .query({ access_token: _this.accessToken })
         .end(function(error, response) {
           if (error) {
             return reject(error)

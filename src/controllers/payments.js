@@ -1,17 +1,16 @@
 var FidorClient = require(__dirname+'/../lib/fidor_client')
 
 module.exports = function(models) {
+  var fidorClient = new FidorClient({
+    url: process.env['FIDOR_URL'],
+    accessToken: process.env['FIDOR_ACCESS_TOKEN'],
+    accountId: process.env['FIDOR_ACCOUNT_ID'],
+    clientId: process.env['FIDOR_CLIENT_ID'],
+    clientSecret: process.env['FIDOR_CLIENT_SECRET']
+  });
 
   return {
     create: function(req, res, next) {
-      var fidorClient = new FidorClient({
-        url: process.env['FIDOR_URL'],
-        accessToken: process.env['FIDOR_ACCESS_TOKEN'],
-        accountId: process.env['FIDOR_ACCOUNT_ID'],
-        clientId: process.env['FIDOR_CLIENT_ID'],
-        clientSecret: process.env['FIDOR_CLIENT_SECRET']
-      });
-
       if (Number(req.body.amount) < 0.01 || typeof req.body.amount !== 'number') {
         res.status(400).send({
           success: false,
@@ -46,11 +45,12 @@ module.exports = function(models) {
             success: false,
             error: payment.error.message
           })
+        } else {
+          res.status(200).send({
+            success: true,
+            payment: payment
+          })
         }
-        res.status(200).send({
-          success: true,
-          payment: payment
-        })
       })
       .error(next);
 
@@ -68,6 +68,21 @@ module.exports = function(models) {
       // .error(next)
     },
     show: function(req, res, next) {
+      fidorClient.getPayment(req.params.id)
+      .then(function(payment) {
+        if (payment.error) {
+          res.status(payment.error.code).send({
+            success: false,
+            error: payment.error.message
+          })
+        } else {
+          res.status(200).send({
+            success: true,
+            payment: payment
+          })
+        }
+      })
+      .error(next);
       // new models.Payment({ id: req.params.id })
       //   .fetch()
       //   .then(function(payment) {
