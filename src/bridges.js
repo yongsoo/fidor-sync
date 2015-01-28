@@ -1,3 +1,4 @@
+
 var Application = require('bridges-application')
 var path        = require('path')
 var models      = require(path.join(__dirname, 'models'))

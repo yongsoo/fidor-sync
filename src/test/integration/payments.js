@@ -1,7 +1,8 @@
+
 var app = require(__dirname+'/../../lib/server')
-var assert = require('assert')
 var http = require('supertest')(app)
 var uuid = require('uuid')
+var assert = require('chai').assert
 
 describe('Fidor Sync API end point: POST /payments', function() {
 

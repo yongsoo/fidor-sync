@@ -1,3 +1,4 @@
+
 var Promise = require('bluebird')
 var http = require('superagent')
 var uuid = require('uuid')
@@ -50,16 +51,33 @@ FidorClient.prototype = {
         .query({ access_token: _this.accessToken })
         .end(function(error, response) {
           if (error) {
-            return reject(error)
+            return reject(error);
           } else {
-            resolve(response.body)
+            resolve(response.body);
           }
         });
     });
   },
 
-  deletePayment: function(id) {
-    throw new Error('Unimplemented; TODO: Check if API allows deleting payment');
+  getAvailableAcctBalance: function() {
+    var _this = this;
+
+    return new Promise(function(resolve, reject) {
+      return http
+        .get(_this.url + '/accounts/')
+        .query({ access_token: _this.accessToken })
+        .end(function(error, response) {
+          if (error) {
+            return reject(error);
+          } else {
+            if (response.body.data[0].is_locked) {
+              return reject(new Error('Account is locked'));
+            } else {
+              resolve(response.body.data[0].balance_available);
+            }
+          }
+        });
+    });
   }
 }
 

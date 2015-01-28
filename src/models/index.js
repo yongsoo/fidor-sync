@@ -1,3 +1,4 @@
+
 var knex      = require(__dirname+'/../config/database')
 var bookshelf = require('bookshelf')(knex)
 

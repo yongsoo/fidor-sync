@@ -8,7 +8,6 @@ module.exports = function(router, controllers) {
 
   router.post('/payments', controllers.payments.create)
   router.get('/payments/:id', controllers.payments.show)
-  router.delete('/payments/:id', controllers.payments.cancel) 
 
   router.post('/quotes', controllers.quotes.create)
   router.get('/quotes/:id', controllers.quotes.show)

@@ -1,3 +1,4 @@
+
 var FidorClient = require(__dirname+'/../lib/fidor_client')
 
 module.exports = function(models) {
@@ -12,33 +13,27 @@ module.exports = function(models) {
   return {
     create: function(req, res, next) {
       if (Number(req.body.amount) < 0.01 || typeof req.body.amount !== 'number') {
-        res.status(400).send({
+        return res.status(400).send({
           success: false,
           error: 'Amount must be a number and greater than 0.01'
         })
-        return;
-      } else if (req.body.recipient && req.body.recipient.length > 70) {
-        res.status(400).send({
+      }
+
+      if (req.body.recipient && req.body.recipient.length > 70) {
+        return res.status(400).send({
           success: false,
           error: 'Recipient can not be greater than 70 characters long'
         })
-        return;
-      } else if (req.body.message && req.body.message.length > 140) {
-        res.status(400).send({
+      }
+
+      if (req.body.message && req.body.message.length > 140) {
+        return res.status(400).send({
           success: false,
           error: 'Message can not be greater than 140 characters long'
         })
-        return;
       }
 
-      fidorClient.sendPayment({
-        amount: req.body.amount,
-        uid: req.body.uid,
-        recipient: req.body.recipient,
-        iban: req.body.iban,
-        bic: req.body.bic,
-        message: req.body.message
-      })
+      fidorClient.sendPayment(req.body)
       .then(function(payment) {
         if (payment.error) {
           res.status(payment.error.code).send({
@@ -96,9 +91,6 @@ module.exports = function(models) {
       //     }
       //   })
       //   .error(next)
-    },
-    cancel: function(req, res, next) {
-      next(new Error('Unimplemented'))
     }
   }
 }

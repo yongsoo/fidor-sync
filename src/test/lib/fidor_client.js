@@ -1,6 +1,8 @@
+
 var FidorClient = require(__dirname+'/../../lib/fidor_client')
-var assert = require('assert')
 var uuid = require('uuid')
+var assert = require('chai').assert
+var expect = require('chai').expect 
 
 describe('Fidor Client', function() {
   var fidorClient;
@@ -63,6 +65,20 @@ describe('Fidor Client', function() {
     })
   });
 
+  it('should be able to get account balance', function(done) {
+    fidorClient.getAvailableAcctBalance()
+    .then(function(balance) {
+      console.log('balance is:', balance);
+      expect(balance).to.be.a('number');
+      done();
+    })
+    .error(function(error) {
+      console.log('Error: ', error);
+      assert(!error);
+      done();
+    })
+  });
+
   it('should be denied access with invalid credentials', function(done) {
     fidorClient = new FidorClient({
       url: process.env['FIDOR_URL'],
@@ -82,5 +98,4 @@ describe('Fidor Client', function() {
       done();
     })
   });
-
 });
