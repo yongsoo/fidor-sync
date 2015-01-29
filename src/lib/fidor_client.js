@@ -70,12 +70,8 @@ FidorClient.prototype = {
           if (error) {
             return reject(error);
           } else {
-            if (response.body.data[0].is_locked) {
-              return reject(new Error('Account is locked'));
-            } else {
               resolve(response.body.data[0].balance_available);
             }
-          }
         });
     });
   }

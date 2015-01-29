@@ -68,7 +68,6 @@ describe('Fidor Client', function() {
   it('should be able to get account balance', function(done) {
     fidorClient.getAvailableAcctBalance()
     .then(function(balance) {
-      console.log('balance is:', balance);
       expect(balance).to.be.a('number');
       done();
     })
