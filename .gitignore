@@ -1,6 +1,4 @@
 
-build/
 node_modules
 npm-debug.log
-*.swo
-*.swp
+config.json

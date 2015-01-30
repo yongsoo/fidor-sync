@@ -1,50 +1,27 @@
 {
   "name": "fidor-sync",
-  "version": "0.1.1",
-  "description": "Sends, monitors, tracks, and quotes payments on the Fidor network",
-  "main": "build/index.js",
+  "version": "0.0.1",
+  "description": "Fidor bridge that syncs payments from a gateway to Fidor and vice versa",
+  "main": "src/server.js",
   "scripts": {
-    "test": "npm run build && mocha -R spec build/test/**/*.js",
-    "start": "npm run build && node build/bridges",
-    "build": "gulp"
+    "test": "./node_modules/mocha/bin/_mocha -R spec test/**/*.js",
+    "start": "node src/server.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/yongsoo/fidor-sync.git"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "bluebird": "^2.8.0",
-    "body-parser": "^1.10.0",
-    "bookshelf": "^0.7.9",
-    "bridges": "0.3.0",
-    "bridges-application": "^0.2.1",
-    "bridges-express": "^0.3.1",
-    "express": "^4.10.5",
-    "gulp": "^3.8.10",
-    "knex": "^0.7.3",
     "lodash": "^2.4.1",
     "nconf": "^0.7.1",
-    "passport": "^0.2.1",
-    "pg": "^4.1.0",
-    "promise": "^6.0.1",
-    "sqlite3": "^3.0.4",
     "superagent": "^0.21.0",
-    "supertest": "^0.15.0",
-    "uuid": "^2.0.1",
-    "winston": "^0.8.3"
+    "uuid": "^2.0.1"
   },
   "devDependencies": {
-    "gulp-6to5": "^1.0.2",
-    "chai": "^1.10.0",
     "sinon": "^1.12.1",
-    "supertest": "^0.15.0",
     "mocha": "^2.0.1",
-    "jshint": "^2.5.10",
     "istanbul": "^0.3.5",
-    "coveralls": "^2.11.2",
-    "gulp-jshint": "^1.9.0",
-    "gulp-uglify": "^1.0.2"
+    "coveralls": "^2.11.2"
   }
 }

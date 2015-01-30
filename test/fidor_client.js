@@ -1,17 +1,17 @@
 
-var FidorClient = require(__dirname+'/../../lib/fidor_client')
+var FidorClient = require('./../src/fidor_client')
 var uuid = require('uuid')
-var assert = require('chai').assert
-var expect = require('chai').expect 
+var assert = require('assert')
+var config = require('./../src/config')
 
 describe('Fidor Client', function() {
   var fidorClient;
 
   it('should initialize with Fidor credentials', function() {
     fidorClient = new FidorClient({
-      url: process.env['FIDOR_URL'],
-      accessToken: process.env['FIDOR_ACCESS_TOKEN'],
-      accountId: process.env['FIDOR_ACCOUNT_ID']
+      url: config.get('FIDOR_URL'),
+      accessToken: config.get('FIDOR_ACCESS_TOKEN'),
+      accountId: config.get('FIDOR_ACCOUNT_ID')
     })
   });
 
@@ -65,26 +65,13 @@ describe('Fidor Client', function() {
     })
   });
 
-  it('should be able to get account balance', function(done) {
-    fidorClient.getAvailableAcctBalance()
-    .then(function(balance) {
-      expect(balance).to.be.a('number');
-      done();
-    })
-    .error(function(error) {
-      console.log('Error: ', error);
-      assert(!error);
-      done();
-    })
-  });
-
   it('should be denied access with invalid credentials', function(done) {
     fidorClient = new FidorClient({
-      url: process.env['FIDOR_URL'],
+      url: config.get('FIDOR_URL'),
       accessToken: 'invalid',
-      accountId: process.env['FIDOR_ACCOUNT_ID'],
-      clientId: process.env['FIDOR_CLIENT_ID'],
-      clientSecret: process.env['FIDOR_CLIENT_SECRET']
+      accountId: config.get('FIDOR_ACCOUNT_ID'),
+      clientId: config.get('FIDOR_CLIENT_ID'),
+      clientSecret: config.get('FIDOR_CLIENT_SECRET')
     })
 
     fidorClient.sendPayment({
