@@ -1,7 +1,6 @@
 
 var Promise = require('bluebird')
 var http = require('superagent')
-var uuid = require('uuid')
 
 var FidorClient = function(options) {
   this.url = options.url;
@@ -15,7 +14,7 @@ FidorClient.prototype.sendPayment = function(options) {
   return new Promise(function(resolve, reject) {
     var payment = {
       amount: options.amount,
-      external_uid: options.uid || uuid.v4(),
+      external_uid: options.uid,
       account_id: _this.accountId,
       access_token: _this.accessToken,
       remote_name: options.recipient,

@@ -42,7 +42,7 @@ describe('Fidor Client', function() {
   it('should be able to get a payment', function(done) {
     fidorClient.getPayment(5777)
     .then(function(payment) {
-      assert.strictEqual(payment.id, "5777");
+      assert.strictEqual(payment.id, '5777');
       done();
     })
     .error(function(error) {
