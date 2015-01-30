@@ -62,20 +62,10 @@ nconf.set('FIDOR_ACCOUNT_ID', require('../config.json').fidor.FIDOR_ACCOUNT_ID);
 nconf.set('FIDOR_CLIENT_ID', require('../config.json').fidor.FIDOR_CLIENT_ID);
 nconf.set('FIDOR_CLIENT_SECRET', require('../config.json').fidor.FIDOR_CLIENT_SECRET);
 
-nconf.set('KNOX_URL', require('../config.json').knox.KNOX_URL);
-nconf.set('KNOX_API_KEY', require('../config.json').knox.KNOX_API_KEY);
-nconf.set('KNOX_API_PASSWORD', require('../config.json').knox.KNOX_API_PASSWORD);
-
 nconf.set('EUR_GATEWAY_URL', require('../config.json').eur_gateway.EUR_GATEWAY_URL);
 nconf.set('EUR_GATEWAY_USERNAME', require('../config.json').eur_gateway.EUR_GATEWAY_USERNAME);
 nconf.set('EUR_GATEWAY_PASSWORD', require('../config.json').eur_gateway.EUR_GATEWAY_PASSWORD);
 nconf.set('EUR_GATEWAY_HOT_WALLET', require('../config.json').eur_gateway.EUR_GATEWAY_HOT_WALLET);
 nconf.set('EUR_GATEWAY_COLD_WALLET', require('../config.json').eur_gateway.EUR_GATEWAY_COLD_WALLET);
-
-nconf.set('USD_GATEWAY_URL', require('../config.json').usd_gateway.USD_GATEWAY_URL);
-nconf.set('USD_GATEWAY_USERNAME', require('../config.json').usd_gateway.USD_GATEWAY_USERNAME);
-nconf.set('USD_GATEWAY_PASSWORD', require('../config.json').usd_gateway.USD_GATEWAY_PASSWORD);
-nconf.set('USD_GATEWAY_HOT_WALLET', require('../config.json').usd_gateway.USD_GATEWAY_HOT_WALLET);
-nconf.set('USD_GATEWAY_COLD_WALLET', require('../config.json').usd_gateway.USD_GATEWAY_COLD_WALLET);
 
 module.exports = nconf;
