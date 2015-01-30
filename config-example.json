@@ -8,5 +8,24 @@
     "FIDOR_ACCOUNT_ID": "",
     "FIDOR_CLIENT_ID": "",
     "FIDOR_CLIENT_SECRET": ""
+  },
+  "knox": {
+    "KNOX_URL": "",
+    "KNOX_API_KEY": "",
+    "KNOX_API_PASSWORD": ""
+  },
+  "eur_gateway": {
+    "EUR_GATEWAY_URL": "",
+    "EUR_GATEWAY_USERNAME": "",
+    "EUR_GATEWAY_PASSWORD": "",
+    "EUR_GATEWAY_HOT_WALLET": "",
+    "EUR_GATEWAY_COLD_WALLET": ""
+  },
+  "usd_gateway": {
+    "USD_GATEWAY_URL": "",
+    "USD_GATEWAY_USERNAME": "",
+    "USD_GATEWAY_PASSWORD": "",
+    "USD_GATEWAY_HOT_WALLET": "",
+    "USD_GATEWAY_COLD_WALLET": ""
   }
 }

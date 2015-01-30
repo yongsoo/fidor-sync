@@ -8,11 +8,11 @@ var GatewayClient = function(options) {
 }
 
 GatewayClient.prototype.getTransaction = function() {
-
+  
 }
 
 GatewayClient.prototype.putTransaction = function(transaction) {
-
+  
 }
 
 module.exports = GatewayClient;
