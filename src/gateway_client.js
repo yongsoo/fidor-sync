@@ -13,7 +13,7 @@ GatewayClient.prototype.getTransactions = function() {
 
   return new Promise(function(resolve, reject) {
     return http
-      .get(_this.url + '/external_transactions')
+      .get(_this.url + '/v1/external_transactions')
       .auth(_this.username, _this.password)
       .end(function(error, response) {
         if (error) {
