@@ -25,8 +25,42 @@ GatewayClient.prototype.getTransactions = function() {
   });
 }
 
-GatewayClient.prototype.putTransaction = function(transaction) {
+GatewayClient.prototype.createExternalTransaction = function(transaction) {
+  var _this = this;
 
+  return new Promise(function(resolve, reject) {
+    http
+      .post(_this.url + '/v1/external_transactions')
+      .auth(_this.username, _this.password)
+      .send(transaction)
+      .end(function(error, response) {
+        if (error) {
+          return reject(error);
+        } else {
+          resolve(response.body);
+        }
+      });
+  });
 }
+
+GatewayClient.prototype.updateTransactionStatusToCleared = function(transactionId) {
+  var _this = this;
+
+  return new Promise(function(resolve, reject) {
+    return http
+      .put(_this.url + '/v1/external_transactions/' + transactionId)
+      .set('Content-Type', 'application/json')
+      .send({ status: 'cleared' })
+      .auth(_this.username, _this.password)
+      .end(function(error, response) {
+        if (error) {
+          return reject(error);
+        } else {
+          resolve(response.body);
+        }
+      });
+  });
+}
+
 
 module.exports = GatewayClient;
