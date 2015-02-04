@@ -91,6 +91,9 @@ GatewayClient.prototype.getAccountInformation = function() {
         if (error) {
           return reject(error);
         }
+        if (response.body.external_accounts.length === 0) {
+          return reject(new Error('You must have at least one external account'));
+        }
         resolve(response.body);
       });
   });
