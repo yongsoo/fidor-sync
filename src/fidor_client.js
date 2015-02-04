@@ -30,12 +30,11 @@ FidorClient.prototype.sendPayment = function(options) {
       .end(function(error, response) {
         if (error) {
           return reject(error);
-        } else {
-          if (response.body.error) {
-            return reject(response.body.error);
-          }
-          resolve(response.body);
         }
+        if (response.body.error) {
+          return reject(response.body.error);
+        }
+        resolve(response.body);
       });
   });
 }
@@ -50,9 +49,8 @@ FidorClient.prototype.getPayment = function(id) {
       .end(function(error, response) {
         if (error) {
           return reject(error);
-        } else {
-          resolve(response.body);
         }
+        resolve(response.body);
       });
   });
 }

@@ -14,13 +14,16 @@ GatewayClient.prototype.getTransactions = function() {
   return new Promise(function(resolve, reject) {
     return http
       .get(_this.url + '/v1/external_transactions')
+      .query({
+        status: 'invoiced',
+        sort_direction: 'desc'
+      })
       .auth(_this.username, _this.password)
       .end(function(error, response) {
         if (error) {
           return reject(error);
-        } else {
-          resolve(response.body);
         }
+        resolve(response.body);
       });
   });
 }
@@ -36,9 +39,8 @@ GatewayClient.prototype.createExternalTransaction = function(transaction) {
       .end(function(error, response) {
         if (error) {
           return reject(error);
-        } else {
-          resolve(response.body);
         }
+        resolve(response.body);
       });
   });
 }
@@ -55,9 +57,41 @@ GatewayClient.prototype.updateTransactionStatus = function(transactionId, status
       .end(function(error, response) {
         if (error) {
           return reject(error);
-        } else {
-          resolve(response.body);
         }
+        resolve(response.body);
+      });
+  });
+}
+
+GatewayClient.prototype.createExternalAccount = function(externalAccount) {
+  var _this = this;
+
+  return new Promise(function(resolve, reject) {
+    http
+      .post(_this.url + '/v1/external_accounts')
+      .auth(_this.username, _this.password)
+      .send(externalAccount)
+      .end(function(error, response) {
+        if (error) {
+          return reject(error);
+        }
+        resolve(response.body);
+      })
+  })
+}
+
+GatewayClient.prototype.getAccountInformation = function() {
+  var _this = this;
+
+  return new Promise(function(resolve, reject) {
+    return http
+      .get(_this.url + '/v1/external_accounts')
+      .auth(_this.username, _this.password)
+      .end(function(error, response) {
+        if (error) {
+          return reject(error);
+        }
+        resolve(response.body);
       });
   });
 }
