@@ -74,10 +74,8 @@ describe('Gateway Client', function() {
 
     gatewayClient.createExternalTransaction(transaction)
     .then(function(transactions) {
-      console.log('transactions: ', transactions);
       gatewayClient.updateTransactionStatus(transactions.externalTransaction.id, 'cleared')
       .then(function(response) {
-        console.log('response is: ', response);
         assert.strictEqual(response.externalTransaction.status, 'cleared');
         done();
       })
