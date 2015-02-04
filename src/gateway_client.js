@@ -14,6 +14,10 @@ GatewayClient.prototype.getTransactions = function() {
   return new Promise(function(resolve, reject) {
     return http
       .get(_this.url + '/v1/external_transactions')
+      .query({
+        status: 'invoiced',
+        sort_direction: 'desc'
+      })
       .auth(_this.username, _this.password)
       .end(function(error, response) {
         if (error) {
@@ -51,6 +55,23 @@ GatewayClient.prototype.updateTransactionStatus = function(transactionId, status
       .put(_this.url + '/v1/external_transactions/' + transactionId)
       .set('Content-Type', 'application/json')
       .send({ status: status })
+      .auth(_this.username, _this.password)
+      .end(function(error, response) {
+        if (error) {
+          return reject(error);
+        } else {
+          resolve(response.body);
+        }
+      });
+  });
+}
+
+GatewayClient.prototype.getAccountInformation = function() {
+  var _this = this;
+
+  return new Promise(function(resolve, reject) {
+    return http
+      .get(_this.url + '/v1/external_accounts/')
       .auth(_this.username, _this.password)
       .end(function(error, response) {
         if (error) {
