@@ -1,6 +1,7 @@
 
 var Promise = require('bluebird')
 var http = require('superagent')
+var IBAN = require('iban')
 
 var FidorClient = function(options) {
   this.url = options.url;
@@ -12,6 +13,10 @@ FidorClient.prototype.sendPayment = function(options) {
   var _this = this;
 
   return new Promise(function(resolve, reject) {
+    if (!IBAN.isValid(options.iban)) {
+      return reject(new Error('IBAN must be valid'));
+    }
+
     var payment = {
       amount: options.amount,
       external_uid: options.uid,

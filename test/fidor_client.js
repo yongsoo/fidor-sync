@@ -39,6 +39,24 @@ describe('Fidor Client', function() {
     })
   });
 
+  it('should not be able to send payment with invalid IBAN', function(done) {
+    var uid = uuid.v4();
+
+    fidorClient.sendPayment({
+      amount: 1,
+      iban: 'invalid',
+      recipient: 'Yong-Soo',
+      uid: uid,
+      message: 'Test message'
+    })
+    .error(function(error) {
+      console.log('Error: ', error);
+      assert.strictEqual(error instanceof Error, true);
+      assert.strictEqual(error.message, 'IBAN must be valid');
+      done();
+    })
+  });
+
   it('should be able to get a payment', function(done) {
     fidorClient.getPayment(5777)
     .then(function(payment) {
