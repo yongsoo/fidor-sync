@@ -30,7 +30,7 @@ describe('Gateway Client', function() {
     })
   });
 
-  it('should be able to create a transaction', function(done) {
+  it.skip('should be able to create a transaction', function(done) {
     var uuidNum = uuid.v4();
     var transaction = {
       deposit: false,
@@ -49,14 +49,14 @@ describe('Gateway Client', function() {
     .then(function(response) {
       assert.strictEqual(response.success, true);
       assert.strictEqual(response.externalTransaction.uid, uuidNum);
-      done()
+      done();
     })
     .error(function(error) {
       console.log('Error: ', error);
       assert(!error);
       done();
     })
-  })
+  });
 
   it('should be able to update transaction status to cleared', function(done) {
     var transaction = {
@@ -69,6 +69,7 @@ describe('Gateway Client', function() {
       status: 'invoiced',
       ripple_transaction_id: 234,
       uid: uuid.v4(),
+      user_id: 1,
       invoice_id: '84cfb783192e9e563bf8e3b0ac31d9403a185e5af5f5a441db855dcc4a8a171a'
     };
 
@@ -91,4 +92,29 @@ describe('Gateway Client', function() {
       done();
     })
   });
+
+  it.skip('should be able to create an external account', function(done) {
+    var uuidNum = uuid.v4();
+    var externalAcct = {
+      address: 'DE72965563127474898541',
+      name: 'Yong-Soo',
+      user_id: 1,
+      uid: '111',
+      type: 'iban',
+      data: 'Bank of Yong-Soo'
+    };
+
+    gatewayClient.createExternalAccount(externalAcct)
+    .then(function(response) {
+      assert.strictEqual(response.success, true);
+      done();
+    })
+    .error(function(error) {
+      console.log('Error: ', error);
+      assert(!error);
+      done();
+    })
+  });
+
+
 });
