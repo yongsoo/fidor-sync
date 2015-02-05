@@ -51,7 +51,6 @@ GatewayClient.prototype.updateTransactionStatus = function(transactionId, status
   return new Promise(function(resolve, reject) {
     return http
       .put(_this.url + '/v1/external_transactions/' + transactionId)
-      .set('Content-Type', 'application/json')
       .send({ status: status })
       .auth(_this.username, _this.password)
       .end(function(error, response) {

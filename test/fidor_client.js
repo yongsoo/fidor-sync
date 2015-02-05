@@ -32,11 +32,6 @@ describe('Fidor Client', function() {
       assert.strictEqual(payment.subject, 'Test message');
       done();
     })
-    .error(function(error) {
-      console.log('Error: ', error);
-      assert(!error);
-      done();
-    })
   });
 
   it('should not be able to send payment with invalid IBAN', function(done) {
@@ -50,7 +45,6 @@ describe('Fidor Client', function() {
       message: 'Test message'
     })
     .error(function(error) {
-      console.log('Error: ', error);
       assert.strictEqual(error instanceof Error, true);
       assert.strictEqual(error.message, 'IBAN must be valid');
       done();
@@ -63,22 +57,12 @@ describe('Fidor Client', function() {
         assert.strictEqual(payment.id, '5777');
         done();
       })
-      .error(function(error) {
-        console.log('Error: ', error);
-        assert(!error);
-        done();
-      })
   });
 
   it('should be not be able to get a payment with invalid id', function(done) {
     fidorClient.getPayment(235781290794026029045024690289046223523525235235235235252062)
       .then(function(payment) {
         assert.strictEqual(payment.error.code, 404);
-        done();
-      })
-      .error(function(error) {
-        console.log('Error: ', error);
-        assert(!error);
         done();
       })
   });

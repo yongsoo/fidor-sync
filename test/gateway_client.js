@@ -23,11 +23,6 @@ describe('Gateway Client', function() {
         assert.strictEqual(typeof payments, 'object');
         done();
       })
-      .error(function(error) {
-        console.log('Error: ', error);
-        assert(!error);
-        done();
-      })
   });
 
   it.skip('should be able to create a transaction', function(done) {
@@ -49,11 +44,6 @@ describe('Gateway Client', function() {
       .then(function(response) {
         assert.strictEqual(response.success, true);
         assert.strictEqual(response.externalTransaction.uid, uuidNum);
-        done();
-      })
-      .error(function(error) {
-        console.log('Error: ', error);
-        assert(!error);
         done();
       })
   });
@@ -80,16 +70,6 @@ describe('Gateway Client', function() {
             assert.strictEqual(response.externalTransaction.status, 'cleared');
             done();
           })
-          .error(function(error) {
-            console.log('Error: ', error);
-            assert(!error);
-            done();
-          })
-      })
-      .catch(function(error) {
-        console.log('Error: ', error);
-        assert(!error);
-        done();
       })
   });
 
@@ -107,11 +87,6 @@ describe('Gateway Client', function() {
     gatewayClient.createExternalAccount(externalAcct)
       .then(function(response) {
         assert.strictEqual(response.success, true);
-        done();
-      })
-      .error(function(error) {
-        console.log('Error: ', error);
-        assert(!error);
         done();
       })
   });
