@@ -9,7 +9,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 describe('Gateway Client', function() {
   var gatewayClient;
 
-  it('should initialize with gateway credentials', function() {
+  beforeEach(function() {
     gatewayClient = new GatewayClient({
       url: config.get('EUR_GATEWAY_URL'),
       username: config.get('EUR_GATEWAY_USERNAME'),
