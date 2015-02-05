@@ -15,7 +15,7 @@ GatewayClient.prototype.getTransactions = function() {
     return http
       .get(_this.url + '/v1/external_transactions')
       .query({
-        status: 'invoiced',
+        status: 'queued',
         sort_direction: 'desc'
       })
       .auth(_this.username, _this.password)
@@ -79,25 +79,5 @@ GatewayClient.prototype.createExternalAccount = function(externalAccount) {
       })
   })
 }
-
-GatewayClient.prototype.getAccountInformation = function() {
-  var _this = this;
-
-  return new Promise(function(resolve, reject) {
-    return http
-      .get(_this.url + '/v1/external_accounts')
-      .auth(_this.username, _this.password)
-      .end(function(error, response) {
-        if (error) {
-          return reject(error);
-        }
-        if (response.body.external_accounts.length === 0) {
-          return reject(new Error('You must have at least one external account'));
-        }
-        resolve(response.body);
-      });
-  });
-}
-
 
 module.exports = GatewayClient;

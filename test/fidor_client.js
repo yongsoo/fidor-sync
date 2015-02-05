@@ -59,28 +59,28 @@ describe('Fidor Client', function() {
 
   it('should be able to get a payment', function(done) {
     fidorClient.getPayment(5777)
-    .then(function(payment) {
-      assert.strictEqual(payment.id, '5777');
-      done();
-    })
-    .error(function(error) {
-      console.log('Error: ', error);
-      assert(!error);
-      done();
-    })
+      .then(function(payment) {
+        assert.strictEqual(payment.id, '5777');
+        done();
+      })
+      .error(function(error) {
+        console.log('Error: ', error);
+        assert(!error);
+        done();
+      })
   });
 
   it('should be not be able to get a payment with invalid id', function(done) {
     fidorClient.getPayment(235781290794026029045024690289046223523525235235235235252062)
-    .then(function(payment) {
-      assert.strictEqual(payment.error.code, 404);
-      done();
-    })
-    .error(function(error) {
-      console.log('Error: ', error);
-      assert(!error);
-      done();
-    })
+      .then(function(payment) {
+        assert.strictEqual(payment.error.code, 404);
+        done();
+      })
+      .error(function(error) {
+        console.log('Error: ', error);
+        assert(!error);
+        done();
+      })
   });
 
   it('should be denied access with invalid credentials', function(done) {
