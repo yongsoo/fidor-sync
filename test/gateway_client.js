@@ -19,15 +19,15 @@ describe('Gateway Client', function() {
 
   it('should be able to get external payments', function(done) {
     gatewayClient.getTransactions()
-    .then(function(payments) {
-      assert.strictEqual(typeof payments, 'object');
-      done();
-    })
-    .error(function(error) {
-      console.log('Error: ', error);
-      assert(!error);
-      done();
-    })
+      .then(function(payments) {
+        assert.strictEqual(typeof payments, 'object');
+        done();
+      })
+      .error(function(error) {
+        console.log('Error: ', error);
+        assert(!error);
+        done();
+      })
   });
 
   it.skip('should be able to create a transaction', function(done) {
@@ -46,16 +46,16 @@ describe('Gateway Client', function() {
     };
 
     gatewayClient.createExternalTransaction(transaction)
-    .then(function(response) {
-      assert.strictEqual(response.success, true);
-      assert.strictEqual(response.externalTransaction.uid, uuidNum);
-      done();
-    })
-    .error(function(error) {
-      console.log('Error: ', error);
-      assert(!error);
-      done();
-    })
+      .then(function(response) {
+        assert.strictEqual(response.success, true);
+        assert.strictEqual(response.externalTransaction.uid, uuidNum);
+        done();
+      })
+      .error(function(error) {
+        console.log('Error: ', error);
+        assert(!error);
+        done();
+      })
   });
 
   it('should be able to update transaction status to cleared', function(done) {
@@ -74,23 +74,23 @@ describe('Gateway Client', function() {
     };
 
     gatewayClient.createExternalTransaction(transaction)
-    .then(function(transactions) {
-      gatewayClient.updateTransactionStatus(transactions.externalTransaction.id, 'cleared')
-      .then(function(response) {
-        assert.strictEqual(response.externalTransaction.status, 'cleared');
-        done();
+      .then(function(transactions) {
+        gatewayClient.updateTransactionStatus(transactions.externalTransaction.id, 'cleared')
+          .then(function(response) {
+            assert.strictEqual(response.externalTransaction.status, 'cleared');
+            done();
+          })
+          .error(function(error) {
+            console.log('Error: ', error);
+            assert(!error);
+            done();
+          })
       })
-      .error(function(error) {
+      .catch(function(error) {
         console.log('Error: ', error);
         assert(!error);
         done();
       })
-    })
-    .catch(function(error) {
-      console.log('Error: ', error);
-      assert(!error);
-      done();
-    })
   });
 
   it.skip('should be able to create an external account', function(done) {
@@ -105,15 +105,15 @@ describe('Gateway Client', function() {
     };
 
     gatewayClient.createExternalAccount(externalAcct)
-    .then(function(response) {
-      assert.strictEqual(response.success, true);
-      done();
-    })
-    .error(function(error) {
-      console.log('Error: ', error);
-      assert(!error);
-      done();
-    })
+      .then(function(response) {
+        assert.strictEqual(response.success, true);
+        done();
+      })
+      .error(function(error) {
+        console.log('Error: ', error);
+        assert(!error);
+        done();
+      })
   });
 
 
