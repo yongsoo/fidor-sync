@@ -1,19 +1,15 @@
 {
   "config_version": "0.0.1",
-  "fidor": {
-    "FIDOR_ACCESS_TOKEN": "",
-    "FIDOR_URL": "",
-    "FIDOR_USERNAME": "",
-    "FIDOR_PASSWORD": "",
-    "FIDOR_ACCOUNT_ID": "",
-    "FIDOR_CLIENT_ID": "",
-    "FIDOR_CLIENT_SECRET": ""
-  },
-  "eur_gateway": {
-    "EUR_GATEWAY_URL": "",
-    "EUR_GATEWAY_USERNAME": "",
-    "EUR_GATEWAY_PASSWORD": "",
-    "EUR_GATEWAY_HOT_WALLET": "",
-    "EUR_GATEWAY_COLD_WALLET": ""
-  }
+  "FIDOR_ACCESS_TOKEN": "",
+  "FIDOR_URL": "",
+  "FIDOR_USERNAME": "",
+  "FIDOR_PASSWORD": "",
+  "FIDOR_ACCOUNT_ID": "",
+  "FIDOR_CLIENT_ID": "",
+  "FIDOR_CLIENT_SECRET": "",
+  "EUR_GATEWAY_URL": "",
+  "EUR_GATEWAY_USERNAME": "",
+  "EUR_GATEWAY_PASSWORD": "",
+  "EUR_GATEWAY_HOT_WALLET": "",
+  "EUR_GATEWAY_COLD_WALLET": ""
 }
