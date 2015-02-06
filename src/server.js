@@ -1,7 +1,11 @@
 
-var FidorClient = require('fidor_client')
-var GatewayClient = require('gateway_client')
-var config = require('config')
+var FidorClient = require(__dirname+'/fidor_client')
+var GatewayClient = require(__dirname+'/gateway_client')
+var config = require(__dirname+'/config')
+var Promise = require('bluebird')
+var promiseWhile = require('promise-while')(Promise)
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 var fidorClient = new FidorClient({
 	url: config.get('FIDOR_URL'),
@@ -17,31 +21,45 @@ var gatewayClient = new GatewayClient({
   password: config.get('EUR_GATEWAY_PASSWORD')
 })
 
+
 // Monitor gatewayd EUR for new transactions - OUTBOUND
-setInterval(function() {
-	gatewayClient.getTransactions()
-	  .then(function(response) {
-			var txs = response.external_transactions;
-			if (txs.length !== 0) {
-				for (var i = 0; i < txs.length; i++) {
-					fidorClient.sendPayment({
-						amount: txs[i].source_amount,
-						uid: txs[i].id,
-						recipient: txs[i].toAccount.name,
-						iban: txs[i].toAccount.uid,
-						subject: txs[i].memos
-					})
-					.then(function(response) {
-						if (response.state === 'received') {
-							gatewayClient.updateTransactionStatus(response.state.TX_ID_HERE, 'cleared');
-						} else {
-							// TODO: FIDOR payment failed... handle errors, maybe do nothing since this will loop again
-						}
-					})
-				}
-			}
-		})
-}, 100)
+promiseWhile(
+	function() {
+	return true;	
+},
+	function() {
+		return new Promise(function(resolve, reject) {
+			gatewayClient.getNextTransaction()
+			  .then(function(payment) {
+			  	console.log('payment', payment);
+			  	if (payment) {
+						return fidorClient.sendPayment({
+							amount    : payment.source_amount,
+							uid       : payment.id,
+							recipient : payment.toAccount.name,
+							iban      : payment.toAccount.address,
+							subject   : payment.memos
+						})
+						.then(function(response) {
+							console.log('response from fidor: ', response);
+							if (response.state === 'received') {
+								return gatewayClient.updateTransactionStatus(payment.id, 'cleared').then(resolve);
+							} else {
+								console.error('FidorError:', response);
+								setTimeout(resolve, 1000);
+							}
+						})
+			  	} else {
+			  		setTimeout(resolve, 1000)
+			  	}
+			  })
+			  .error(function(error) {
+					console.error('Error:', error);
+					setTimeout(resolve, 1000);
+			  });
+		});
+	}
+)
 
 
 // Monitor FIDOR for new transactions - INBOUND

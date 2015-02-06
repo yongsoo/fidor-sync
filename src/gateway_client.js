@@ -23,9 +23,18 @@ GatewayClient.prototype.getTransactions = function() {
         if (error) {
           return reject(error);
         }
-        resolve(response.body);
+        resolve(response.body.external_transactions);
       });
   });
+}
+
+GatewayClient.prototype.getNextTransaction = function() {
+  var _this = this;
+
+  return _this.getTransactions()
+    .then(function(transactions) {
+      return Promise.resolve(transactions[0]);
+    });
 }
 
 GatewayClient.prototype.createExternalTransaction = function(transaction) {

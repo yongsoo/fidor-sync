@@ -1,8 +1,8 @@
 
-var FidorClient = require('./../src/fidor_client')
+var FidorClient = require(__dirname+'/../src/fidor_client')
+var config = require(__dirname+'/../src/config')
 var uuid = require('uuid')
 var assert = require('assert')
-var config = require('./../src/config')
 
 describe('Fidor Client', function() {
 
