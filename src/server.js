@@ -27,38 +27,36 @@ promiseWhile(
 	function() {
 	return true;	
 },
-	function() {
-		return new Promise(function(resolve, reject) {
-			gatewayClient.getNextTransaction()
-			  .then(function(payment) {
-			  	console.log('payment', payment);
-			  	if (payment) {
-						return fidorClient.sendPayment({
-							amount    : payment.source_amount,
-							uid       : payment.id,
-							recipient : payment.toAccount.name,
-							iban      : payment.toAccount.address,
-							subject   : payment.memos
-						})
-						.then(function(response) {
-							console.log('response from fidor: ', response);
-							if (response.state === 'received') {
-								return gatewayClient.updateTransactionStatus(payment.id, 'cleared').then(resolve);
-							} else {
-								console.error('FidorError:', response);
-								setTimeout(resolve, 1000);
-							}
-						})
-			  	} else {
-			  		setTimeout(resolve, 1000)
-			  	}
-			  })
-			  .error(function(error) {
-					console.error('Error:', error);
-					setTimeout(resolve, 1000);
-			  });
-		});
-	}
+  function() {
+    return new Promise(function(resolve, reject) {
+      gatewayClient.getNextTransaction()
+        .then(function(payment) {
+          if (payment) {
+            return fidorClient.sendPayment({
+              amount    : payment.source_amount,
+              uid       : payment.id,
+              recipient : payment.toAccount.name,
+              iban      : payment.toAccount.address,
+              subject   : payment.memos
+            })
+            .then(function(response) {
+              if (response.state === 'received') {
+                return gatewayClient.updateTransactionStatus(payment.id, 'cleared').then(resolve);
+              } else {
+                console.error('FidorError:', response);
+                setTimeout(resolve, 1000);
+              }
+            })
+          } else {
+            setTimeout(resolve, 1000)
+          }
+        })
+        .error(function(error) {
+          console.error('Error:', error);
+          setTimeout(resolve, 1000);
+        });
+      });
+  }
 )
 
 
