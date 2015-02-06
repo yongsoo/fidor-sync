@@ -1,13 +1,14 @@
 
-var FidorClient = require('./../src/fidor_client')
+var FidorClient = require(__dirname+'/../src/fidor_client')
+var config = require(__dirname+'/../src/config')
 var uuid = require('uuid')
 var assert = require('assert')
-var config = require('./../src/config')
 
 describe('Fidor Client', function() {
+
   var fidorClient;
 
-  it('should initialize with Fidor credentials', function() {
+  beforeEach(function() {
     fidorClient = new FidorClient({
       url: config.get('FIDOR_URL'),
       accessToken: config.get('FIDOR_ACCESS_TOKEN'),
@@ -32,11 +33,6 @@ describe('Fidor Client', function() {
       assert.strictEqual(payment.subject, 'Test message');
       done();
     })
-    .error(function(error) {
-      console.log('Error: ', error);
-      assert(!error);
-      done();
-    })
   });
 
   it('should not be able to send payment with invalid IBAN', function(done) {
@@ -50,7 +46,6 @@ describe('Fidor Client', function() {
       message: 'Test message'
     })
     .error(function(error) {
-      console.log('Error: ', error);
       assert.strictEqual(error instanceof Error, true);
       assert.strictEqual(error.message, 'IBAN must be valid');
       done();
@@ -63,11 +58,6 @@ describe('Fidor Client', function() {
         assert.strictEqual(payment.id, '5777');
         done();
       })
-      .error(function(error) {
-        console.log('Error: ', error);
-        assert(!error);
-        done();
-      })
   });
 
   it('should be not be able to get a payment with invalid id', function(done) {
@@ -76,15 +66,10 @@ describe('Fidor Client', function() {
         assert.strictEqual(payment.error.code, 404);
         done();
       })
-      .error(function(error) {
-        console.log('Error: ', error);
-        assert(!error);
-        done();
-      })
   });
 
   it('should be denied access with invalid credentials', function(done) {
-    fidorClient = new FidorClient({
+    var badFidorClient = new FidorClient({
       url: config.get('FIDOR_URL'),
       accessToken: 'invalid',
       accountId: config.get('FIDOR_ACCOUNT_ID'),
@@ -92,7 +77,7 @@ describe('Fidor Client', function() {
       clientSecret: config.get('FIDOR_CLIENT_SECRET')
     })
 
-    fidorClient.sendPayment({
+    badFidorClient.sendPayment({
       amount: 1,
       iban: 'DE72965563127674898541',
       recipient: 'Yong-Soo'

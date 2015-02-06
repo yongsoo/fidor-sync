@@ -23,9 +23,18 @@ GatewayClient.prototype.getTransactions = function() {
         if (error) {
           return reject(error);
         }
-        resolve(response.body);
+        resolve(response.body.external_transactions);
       });
   });
+}
+
+GatewayClient.prototype.getNextTransaction = function() {
+  var _this = this;
+
+  return _this.getTransactions()
+    .then(function(transactions) {
+      return Promise.resolve(transactions[0]);
+    });
 }
 
 GatewayClient.prototype.createExternalTransaction = function(transaction) {
@@ -51,7 +60,6 @@ GatewayClient.prototype.updateTransactionStatus = function(transactionId, status
   return new Promise(function(resolve, reject) {
     return http
       .put(_this.url + '/v1/external_transactions/' + transactionId)
-      .set('Content-Type', 'application/json')
       .send({ status: status })
       .auth(_this.username, _this.password)
       .end(function(error, response) {
