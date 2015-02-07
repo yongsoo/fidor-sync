@@ -1,7 +1,7 @@
 
 var FidorClient = require(__dirname+'/fidor_client')
-var GatewayClient = require(__dirname+'/gateway_client')
 var config = require(__dirname+'/config')
+var GatewayClient = require('gateway-client')
 var Promise = require('bluebird')
 var promiseWhile = require('promise-while')(Promise)
 
