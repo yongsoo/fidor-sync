@@ -29,18 +29,23 @@ promiseWhile(
 },
   function() {
     return new Promise(function(resolve, reject) {
+      console.log('Listening for new transactions on gatewayd...');
       gatewayClient.getNextTransaction()
         .then(function(payment) {
           if (payment) {
+            console.log('Payment detected. Attemping to send payment to Fidor with payment object:', payment);
             return fidorClient.sendPayment({
-              amount    : payment.source_amount,
-              uid       : payment.id,
-              recipient : payment.toAccount.name,
-              iban      : payment.toAccount.address,
-              subject   : payment.memos
+              amount     : payment.source_amount,
+              uid        : payment.id,
+              recipient  : payment.toAccount.name,
+              iban       : payment.toAccount.address,
+              subject    : payment.memos,
+              remote_bic : payment.toAccount.data
             })
             .then(function(response) {
+              console.log('Response from Fidor: ', response);
               if (response.state === 'received') {
+                console.log('Payment successfully sent, setting gatewayd transaction status to cleared for gatewayd id:', payment.id);
                 return gatewayClient.updateTransactionStatus(payment.id, 'cleared').then(resolve);
               } else {
                 console.error('FidorError:', response);
