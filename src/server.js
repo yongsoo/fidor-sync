@@ -39,12 +39,11 @@ promiseWhile(
               uid        : payment.id,
               recipient  : payment.toAccount.name,
               iban       : payment.toAccount.address,
-              subject    : payment.memos,
-              remote_bic : payment.toAccount.data
+              subject    : payment.memos
             })
             .then(function(response) {
               console.log('Response from Fidor: ', response);
-              if (response.state === 'received') {
+              if (response.state === 'success') {
                 console.log('Payment successfully sent, setting gatewayd transaction status to cleared for gatewayd id:', payment.id);
                 return gatewayClient.updateTransactionStatus(payment.id, 'cleared').then(resolve);
               } else {
