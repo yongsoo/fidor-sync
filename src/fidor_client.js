@@ -21,16 +21,16 @@ FidorClient.prototype.sendPayment = function(options) {
       amount: options.amount,
       external_uid: options.uid,
       account_id: _this.accountId,
-      access_token: _this.accessToken,
       remote_name: options.recipient,
       remote_iban: options.iban,
-      remote_bic: options.bic,
       subject: options.message
     };
 
     http
       .post(_this.url + '/sepa_credit_transfers')
-      .set('Content-Type', 'application/json')
+      .type('application/json')
+      .accept('application/vnd.fidor.de; version=1,text/json')
+      .set('X-Fidor-Api-Token', _this.accessToken)
       .send(payment)
       .end(function(error, response) {
         if (error) {
@@ -50,6 +50,9 @@ FidorClient.prototype.getPayment = function(id) {
   return new Promise(function(resolve, reject) {
     return http
       .get(_this.url + '/sepa_credit_transfers/' + id)
+      .type('application/json')
+      .accept('application/vnd.fidor.de; version=1,text/json')
+      .set('X-Fidor-Api-Token', _this.accessToken)
       .query({ access_token: _this.accessToken })
       .end(function(error, response) {
         if (error) {
