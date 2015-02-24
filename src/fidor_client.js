@@ -18,7 +18,7 @@ FidorClient.prototype.sendPayment = function(options) {
     }
 
     var payment = {
-      amount: options.amount,
+      amount: Math.floor(options.amount * 100),
       external_uid: options.uid,
       account_id: _this.accountId,
       remote_name: options.recipient,
